@@ -1,3 +1,4 @@
+import { Employee, Manager } from "../src/extend-employee";
 import { Seller } from "../src/interface-dan-readonly";
 
 describe("Interface dan Readonly", function () {
@@ -58,7 +59,7 @@ describe("Interface dan Readonly", function () {
 
   it("should support indexable interface use string || not number", function () {
     interface stringArray {
-      [index: string]: string | number;
+      [key: string]: string | number;
     }
 
     const dictionary: stringArray = {
@@ -71,5 +72,40 @@ describe("Interface dan Readonly", function () {
     console.info(dictionary.name); // bisa juga gunakan ["name"]
     console.info(dictionary.address); // bisa juga gunakan ["address"]
     console.info(dictionary.age); // bisa juga gunakan ["age"]
+  });
+
+  it("should support extends in interface typescript", function () {
+    const employee: Employee = {
+      id: 1,
+      name: "Maul",
+      division: "IT",
+    };
+
+    const manager: Manager = {
+      id: 2,
+      name: "Maulana",
+      division: "IT",
+      numberOfEmployes: 10,
+    };
+
+    console.info(employee);
+    console.info(manager);
+  });
+
+  it("should support Function in interface", () => {
+    interface Person {
+      name: string;
+      sayHello(name: string | number): string;
+    }
+
+    const person: Person = {
+      name: "Maulana",
+      sayHello: function (name: string | number): string {
+        return `Hello ${name}, my name is ${this.name}`;
+      },
+    };
+
+    console.info(person.sayHello("Budi"));
+    console.info(person.sayHello(20));
   });
 });
