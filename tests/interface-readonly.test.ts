@@ -1,5 +1,6 @@
 import { Employee, Manager } from "../src/extend-employee";
 import { Seller } from "../src/interface-dan-readonly";
+import { Person } from "../src/person";
 
 describe("Interface dan Readonly", function () {
   it("should support interface dan readonly", function () {
@@ -93,11 +94,6 @@ describe("Interface dan Readonly", function () {
   });
 
   it("should support Function in interface", () => {
-    interface Person {
-      name: string;
-      sayHello(name: string | number): string;
-    }
-
     const person: Person = {
       name: "Maulana",
       sayHello: function (name: string | number): string {
@@ -107,5 +103,64 @@ describe("Interface dan Readonly", function () {
 
     console.info(person.sayHello("Budi"));
     console.info(person.sayHello(20));
+  });
+
+  it("should support intersection types in interface", () => {
+    interface HasName {
+      name: string;
+    }
+    interface HasId {
+      id: number;
+    }
+
+    interface HasAddress {
+      address: string;
+    }
+
+    // jika hanya ada 2 sebaiknya gunakan type cara gabungnya dengan &
+    type Domain = HasName & HasId;
+
+    const domain: Domain = {
+      id: 1,
+      name: "Maulana",
+    };
+
+    console.info(domain);
+
+    // bisa juga digunakan lebih dari 2 penggabungan
+    type Person = HasName & HasAddress & HasId;
+
+    const person: Person = {
+      id: 2,
+      name: "Maul",
+      address: "Jakarta",
+    };
+
+    console.info(person);
+
+    // Jika ingin ada data yang di tambahkan bisa gunakan interface dengan cara extends dan gabungkan dengan ,
+    interface PersonWithAge extends HasName, HasId, HasAddress {
+      age: number;
+    }
+
+    const personWithAge: PersonWithAge = {
+      id: 3,
+      name: "Fachri",
+      address: "Jakarta",
+      age: 20,
+    };
+
+    console.info(personWithAge);
+  });
+
+  //   hati hati menggunakan assertion harus selalu di cek type datanya
+  it("should support assertions in interface typescript", () => {
+    const person: any = {
+      name: "Maul",
+      age: 21,
+    };
+
+    const person2: Person = person as Person;
+    console.info(person2);
   });
 });
