@@ -20,4 +20,14 @@ describe("Array", () => {
 
     // hobbies[0] = "Muhammad Nur Maulana" // tetapi tidak bisa dirubah
   });
+
+  //   Tuple adalah array yang jumlah dan type datanya sudah di tentukan dan tidak bisa dirubah seperti ReadOnlyArray
+  it("Should turn array into tuple", () => {
+    const person: readonly [string, string, number] = ["Maul", "Fachri", 21];
+
+    console.log(person);
+    console.log(person[0]);
+    console.log(person[1]);
+    console.log(person[2]);
+  });
 });
